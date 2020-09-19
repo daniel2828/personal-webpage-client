@@ -4,6 +4,7 @@ import { Layout, Tabs } from "antd";
 import { Redirect } from "react-router-dom";
 import Logo from "../../../assets/img/png/logo.png";
 import RegisterForm from "../../../components/Admin/RegisterForm";
+
 export default function Signin() {
   const { Content } = Layout;
   const { TabPane } = Tabs;
