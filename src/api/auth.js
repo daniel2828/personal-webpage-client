@@ -1,22 +1,27 @@
 import { BASE_PATH, apiVersion } from "./config";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../utils/constants";
-
 import jwtDecode from "jwt-decode";
 
 export function getAccessTokenApi() {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
-  if (!accessToken || accessToken == "null") {
+
+  if (!accessToken || accessToken === "null") {
     return null;
   }
+
   return willExpireToken(accessToken) ? null : accessToken;
 }
+
 export function getRefreshTokenApi() {
   const refreshToken = localStorage.getItem(REFRESH_TOKEN);
-  if (!refreshToken || refreshToken == "null") {
+
+  if (!refreshToken || refreshToken === "null") {
     return null;
   }
+
   return willExpireToken(refreshToken) ? null : refreshToken;
 }
+
 export function refreshAccessTokenApi(refreshToken) {
   const url = `${BASE_PATH}/${apiVersion}/refresh-access-token`;
   const bodyObj = {
@@ -29,13 +34,13 @@ export function refreshAccessTokenApi(refreshToken) {
       "Content-Type": "application/json",
     },
   };
+
   fetch(url, params)
     .then((response) => {
       if (response.status !== 200) {
         return null;
-      } else {
-        return response.json;
       }
+      return response.json();
     })
     .then((result) => {
       if (!result) {
@@ -47,15 +52,16 @@ export function refreshAccessTokenApi(refreshToken) {
       }
     });
 }
+
 export function logout() {
   localStorage.removeItem(ACCESS_TOKEN);
   localStorage.removeItem(REFRESH_TOKEN);
 }
+
 function willExpireToken(token) {
   const seconds = 60;
   const metaToken = jwtDecode(token);
   const { exp } = metaToken;
-  // Moment where we are asking for token
   const now = (Date.now() + seconds) / 1000;
   return now > exp;
 }
