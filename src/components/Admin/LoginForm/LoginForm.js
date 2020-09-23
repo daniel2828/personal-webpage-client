@@ -17,7 +17,7 @@ export default function LoginForm() {
   };
   const login = async (e) => {
     const result = await signInApi(inputs);
-    console.log(result);
+
     if (result.message) {
       notification["error"]({
         message: result.message,

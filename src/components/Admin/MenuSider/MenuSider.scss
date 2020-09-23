@@ -6,4 +6,8 @@
   position: fixed;
   left: 0;
   top: 65px;
+  &__nav-text {
+    display: flex !important;
+    justify-content: left !important;
+  }
 }

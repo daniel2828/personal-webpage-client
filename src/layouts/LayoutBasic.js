@@ -3,7 +3,6 @@ import { Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
 import "./LayoutBasic.scss";
 export default function LayoutAdmin(props) {
-  console.log(props);
   const { Header, Content, Footer } = Layout;
   const { routes } = props;
   return (

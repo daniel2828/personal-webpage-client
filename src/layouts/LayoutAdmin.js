@@ -5,43 +5,52 @@ import MenuTop from "../components/Admin/MenuTop";
 import MenuSider from "../components/Admin/MenuSider";
 import "./LayoutAdmin.scss";
 import Signin from "../pages/Admin/Signin";
-import { getAccessToken } from "../api/auth";
+import { getAccessToken, getRefreshToken } from "../api/auth";
+import useAuth from "../hooks/useAuth";
 export default function LayoutAdmin(props) {
-  console.log(props);
   const { Header, Content, Footer } = Layout;
   const { routes } = props;
   const [menuCollapsed, setMenuCollapsed] = useState(false);
+  const { user, isLoading } = useAuth();
 
-  const user = null;
-  const token = getAccessToken();
-  if (!user) {
+  /*
+  const accessToken = getAccessToken();
+  const refreshToken = getRefreshToken();
+  */
+  if (!user && !isLoading) {
+    // That means that there is no user in the system
     return (
       <>
         <Route path="/admin/sign" component={Signin} />;
         <Redirect to="/admin/sign" />
       </>
     );
-  }
-  return (
-    <Layout>
-      <MenuSider menuCollapsed={menuCollapsed} />
-      <Layout
-        className="layout-admin"
-        style={{ marginLeft: menuCollapsed ? "80px" : "200px" }}
-      >
-        <Header className="layout-admin__header">
-          <MenuTop
-            menuCollapsed={menuCollapsed}
-            setMenuCollapsed={setMenuCollapsed}
-          ></MenuTop>
-        </Header>
-        <Content className="layout-admin__content">
-          <LoadRouter routes={routes} />
-        </Content>
-        <Footer className="layout-admin__footer">Daniel Tendero García</Footer>
+  } else if (user && !isLoading) {
+    return (
+      <Layout>
+        <MenuSider menuCollapsed={menuCollapsed} />
+        <Layout
+          className="layout-admin"
+          style={{ marginLeft: menuCollapsed ? "80px" : "200px" }}
+        >
+          <Header className="layout-admin__header">
+            <MenuTop
+              menuCollapsed={menuCollapsed}
+              setMenuCollapsed={setMenuCollapsed}
+            ></MenuTop>
+          </Header>
+          <Content className="layout-admin__content">
+            <LoadRouter routes={routes} />
+          </Content>
+          <Footer className="layout-admin__footer">
+            Daniel Tendero García
+          </Footer>
+        </Layout>
       </Layout>
-    </Layout>
-  );
+    );
+  } else {
+    return null;
+  }
 }
 function LoadRouter({ routes }) {
   return (

@@ -7,9 +7,10 @@ import {
 } from "@ant-design/icons";
 import DaniLogo from "../../../assets/img/png/logo.png";
 import "./MenuTop.scss";
+import { logout } from "../../../api/auth";
 export default function MenuTop(props) {
-  console.log("Menu top " + props);
   const { menuCollapsed, setMenuCollapsed } = props;
+
   return (
     <div className="menu-top">
       <div className="menu-top__left">
@@ -24,12 +25,17 @@ export default function MenuTop(props) {
       </div>
 
       <div className="menu-top__right">
-        <Button type="link" onClick={() => console.log("desconexion")}>
+        <Button type="link" onClick={logoutTestUser}>
           <PoweroffOutlined />
         </Button>
       </div>
     </div>
   );
+}
+function logoutTestUser() {
+  console.log("logout");
+  logout();
+  window.location.reload();
 }
 function Greeting(menuCollapsed) {
   if (menuCollapsed) {
