@@ -1,4 +1,5 @@
 export function minLengthValidation(inputData, minLength) {
+  // Validate the length of the input
   const { value } = inputData;
   let sClass = "";
   let bOk = false;
@@ -14,6 +15,7 @@ export function minLengthValidation(inputData, minLength) {
   return bOk;
 }
 export function emailValidation(inputData) {
+  // Validate email with a regexp
   const emailValid = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   const { value } = inputData;
   let bOk = false;

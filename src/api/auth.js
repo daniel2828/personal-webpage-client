@@ -3,9 +3,11 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "../utils/constants";
 import jwtDecode from "jwt-decode";
 
 export function getAccessTokenApi() {
+  // GET token from loca lstorage
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
   if (!accessToken || accessToken === "null") {
+    logout();
     return null;
   }
 
@@ -13,9 +15,11 @@ export function getAccessTokenApi() {
 }
 
 export function getRefreshTokenApi() {
+  // GET refreshtoken from loca storage
   const refreshToken = localStorage.getItem(REFRESH_TOKEN);
 
   if (!refreshToken || refreshToken === "null") {
+    logout();
     return null;
   }
 
@@ -23,6 +27,7 @@ export function getRefreshTokenApi() {
 }
 
 export function refreshAccessTokenApi(refreshToken) {
+  // Refresh access token from server
   const url = `${BASE_PATH}/${apiVersion}/refresh-access-token`;
   const bodyObj = {
     refreshToken: refreshToken,
@@ -54,11 +59,13 @@ export function refreshAccessTokenApi(refreshToken) {
 }
 
 export function logout() {
+  // Logout function
   localStorage.removeItem(ACCESS_TOKEN);
   localStorage.removeItem(REFRESH_TOKEN);
 }
 
 function willExpireToken(token) {
+  // Expire token function
   const seconds = 60;
   const metaToken = jwtDecode(token);
   const { exp } = metaToken;

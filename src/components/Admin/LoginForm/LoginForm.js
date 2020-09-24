@@ -5,16 +5,20 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { signInApi } from "../../../api/user";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../../utils/constants";
 export default function LoginForm() {
+  // Create states
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
   });
+  // Change form event
   const changeForm = (e) => {
     setInputs({
       ...inputs,
       [e.target.name]: e.target.value,
     });
   };
+
+  // Login a user
   const login = async (e) => {
     const result = await signInApi(inputs);
 
@@ -23,6 +27,7 @@ export default function LoginForm() {
         message: result.message,
       });
     } else {
+      // If login is correct get accessToken and refresh token and store them in local storage
       const { accessToken, refreshToken } = result;
       localStorage.setItem(ACCESS_TOKEN, accessToken);
       localStorage.setItem(REFRESH_TOKEN, refreshToken);

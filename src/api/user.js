@@ -1,6 +1,7 @@
 import { BASE_PATH, apiVersion } from "./config";
 
 export function signUpApi(data) {
+  // Call to API to sing-up a user
   const url = `${BASE_PATH}/${apiVersion}/sign-up`;
 
   const params = {
@@ -34,6 +35,7 @@ export function signUpApi(data) {
     });
 }
 export function signInApi(data) {
+  // Call to API to sing-in a user
   const url = `${BASE_PATH}/${apiVersion}/sign-in`;
   const params = {
     method: "POST",
@@ -54,6 +56,7 @@ export function signInApi(data) {
     });
 }
 export function getUsersApi(token) {
+  // Call to API to get all the users
   const url = `${BASE_PATH}/${apiVersion}/users`;
 
   const params = {
@@ -75,6 +78,7 @@ export function getUsersApi(token) {
     });
 }
 export function getUsersApiActive(token, status) {
+  // Call to API to get all the users that are active or inactive
   const url = `${BASE_PATH}/${apiVersion}/users-active?active=${status}`;
 
   const params = {
@@ -96,6 +100,7 @@ export function getUsersApiActive(token, status) {
     });
 }
 export function uploadAvatarApi(token, avatar, userId) {
+  // Call to API to upload avatar
   const url = `${BASE_PATH}/${apiVersion}/upload-avatar/${userId}`;
   // To send info as images in a fetch
   const formData = new FormData();
@@ -121,6 +126,7 @@ export function uploadAvatarApi(token, avatar, userId) {
 }
 
 export function getAvatarApi(avatarName) {
+  // Call to API to get avatar
   const url = `${BASE_PATH}/${apiVersion}/get-avatar/${avatarName}`;
   return fetch(url)
     .then((response) => {
@@ -132,6 +138,7 @@ export function getAvatarApi(avatarName) {
 }
 
 export function updateUserApi(token, user, userId) {
+  // Call to API to upload user data
   const url = `${BASE_PATH}/${apiVersion}/update-user/${userId}`;
   const params = {
     method: "PUT",
@@ -148,6 +155,70 @@ export function updateUserApi(token, user, userId) {
     })
     .then((result) => {
       return result;
+    })
+    .catch((err) => {
+      return err.message;
+    });
+}
+export function activateUserApi(token, userId, state) {
+  const url = `${BASE_PATH}/${apiVersion}/activate-user/${userId}`;
+  const params = {
+    method: "PUT",
+    body: JSON.stringify({ active: state }),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result.message;
+    })
+    .catch((err) => {
+      return err.message;
+    });
+}
+
+export function deleteUserApi(token, userId) {
+  const url = `${BASE_PATH}/${apiVersion}/delete-user/${userId}`;
+  const params = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result.message;
+    })
+    .catch((err) => {
+      return err.message;
+    });
+}
+
+export function signUpAdminApi(token, data) {
+  const url = `${BASE_PATH}/${apiVersion}/sign-up-admin`;
+  const params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+    body: JSON.stringify(data),
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result.message;
     })
     .catch((err) => {
       return err.message;

@@ -1,28 +1,84 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Avatar, Form, Input, Select, Button, Row, Col } from "antd";
+import {
+  Avatar,
+  Form,
+  Input,
+  Select,
+  Button,
+  Row,
+  Col,
+  notification,
+  message,
+} from "antd";
 import { useDropzone } from "react-dropzone";
 import "./EditUserForm.scss";
 import NoAvatar from "../../../../assets/img/png/no-avatar.png";
 import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 
-import { getAvatarApi } from "../../../../api/user";
+import {
+  getAvatarApi,
+  uploadAvatarApi,
+  updateUserApi,
+} from "../../../../api/user";
+import { getAccessTokenApi } from "../../../../api/auth";
+
 export default function EditUserForm(props) {
-  const { user } = props;
+  const { user, setIsVisibleModal, setReloadUsers } = props;
+  // Create states
   const [avatar, setAvatar] = useState(null);
   const [userData, setUserData] = useState({});
-  console.log(user);
+
   const updateUser = (e) => {
-    console.log(userData);
+    const token = getAccessTokenApi();
+    let userUpdate = userData;
+
+    if (userUpdate.password || userUpdate.repeatPassword) {
+      if (userUpdate.password !== userUpdate.repeatPassword) {
+        notification["error"]({
+          message: "Las contraseñas tienen que ser iguales",
+        });
+        return;
+      } else {
+        delete userUpdate.repeatPassword;
+        setUserData({ ...userData, password: "", repeatPassword: "" });
+      }
+    }
+    if (!userUpdate.name || !userUpdate.lastname || !userUpdate.email) {
+      notification["error"]({
+        message: "El nombre, apellidos y email son obligatorios",
+      });
+      return;
+    }
+    if (typeof userUpdate.avatar === "object") {
+      uploadAvatarApi(token, userUpdate.avatar, user._id).then((response) => {
+        userUpdate.avatar = response.avatarName;
+        updateUserApi(token, userUpdate, user._id).then((result) => {
+          notification["success"]({ message: result.message });
+        });
+        setIsVisibleModal(false);
+        setReloadUsers(true);
+      });
+    } else {
+      updateUserApi(token, userUpdate, user._id).then((result) => {
+        notification["success"]({ message: result.message });
+      });
+      setIsVisibleModal(false);
+      setReloadUsers(true);
+    }
   };
+
+  // Effects used
+  // Efect for changes on user
   useEffect(() => {
     setUserData({
       name: user.name,
-      lastName: user.lastname,
+      lastname: user.lastname,
       email: user.email,
       role: user.role,
       avatar: user.avatar,
     });
   }, [user]),
+    // Efect foor change avatar
     useEffect(() => {
       if (user.avatar) {
         getAvatarApi(user.avatar).then((response) => {
@@ -32,6 +88,7 @@ export default function EditUserForm(props) {
         setAvatar(null);
       }
     }, [user]);
+  // Efect for changes in avatar
   useEffect(() => {
     if (avatar) {
       setUserData({ ...userData, avatar: avatar.file });
@@ -113,9 +170,9 @@ function EditForm(props) {
             <Input
               prefix={<UserOutlined />}
               placeholder="Apellidos"
-              value={userData.lastName}
+              value={userData.lastname}
               onChange={(e) =>
-                setUserData({ ...userData, lastName: e.target.value })
+                setUserData({ ...userData, lastname: e.target.value })
               }
             />
           </Form.Item>
@@ -155,6 +212,7 @@ function EditForm(props) {
               prefix={<LockOutlined />}
               placeholder="Contraseña"
               type="password"
+              value={userData.password}
               onChange={(e) =>
                 setUserData({ ...userData, password: e.target.value })
               }
@@ -167,6 +225,7 @@ function EditForm(props) {
               prefix={<LockOutlined />}
               placeholder="Repetir contraseña"
               type="password"
+              value={userData.repeatPassword}
               onChange={(e) =>
                 setUserData({ ...userData, repeatPassword: e.target.value })
               }
