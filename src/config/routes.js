@@ -6,6 +6,7 @@ import LayoutBasic from "../layouts/LayoutBasic";
 import AdminSingIn from "../pages/Admin/Signin/Signin";
 import AdminHome from "../pages/Admin/Admin";
 import AdminUsers from "../pages/Admin/Users/Users";
+import AdminMenuWeb from "../pages/Admin/MenuWeb"
 
 //Normal pages
 
@@ -38,6 +39,11 @@ const routes = [
         path: "/admin/users",
         component: AdminUsers,
         exact: true,
+      },
+      {
+        path: "/admin/menu",
+        component: AdminMenuWeb,
+        exact : true
       },
       {
         component: Error404,

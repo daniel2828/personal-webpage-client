@@ -9,6 +9,7 @@ import {
 
 import { signUpApi } from "../../../api/user";
 export default function RegisterForm() {
+  // Create states 
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -21,6 +22,7 @@ export default function RegisterForm() {
     repeatPassword: false,
     privacyPolicy: false,
   });
+  // Change form event
   const changeForm = (e) => {
     if (e.target.name === "privacyPolicy") {
       setInputs({ ...inputs, [e.target.name]: e.target.checked });
@@ -28,7 +30,7 @@ export default function RegisterForm() {
       setInputs({ ...inputs, [e.target.name]: e.target.value });
     }
   };
-
+  // Validate inputs of the form
   const inputValidation = (e) => {
     const { type, name } = e.target;
 
@@ -49,11 +51,15 @@ export default function RegisterForm() {
       });
     }
   };
+
+  // Register function
   const register = async (e) => {
+    // Fill the data
     const passwordValue = inputs.password;
     const repeatPasswordVal = inputs.repeatPassword;
     const nameVal = inputs.email;
     const privacyPolicyVal = inputs.privacyPolicy;
+    
     if (!nameVal || !passwordValue || !repeatPasswordVal || !privacyPolicyVal) {
       notification["error"]({
         message: "Todos los campos son obligatorios",
@@ -64,6 +70,7 @@ export default function RegisterForm() {
           message: "Las contraseñas tienen que ser iguales",
         });
       } else {
+        // Call to the sign-up function to register data
         const result = await signUpApi(inputs);
         if (!result.ok) {
           notification["error"]({
@@ -78,7 +85,7 @@ export default function RegisterForm() {
       }
     }
   };
-
+  // Reset function 
   const resetForm = () => {
     const vinputs = document.getElementsByTagName("input");
     for (let i = 0; i < vinputs.length; i++) {

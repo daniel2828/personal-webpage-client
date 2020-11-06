@@ -77,7 +77,7 @@ export default function EditUserForm(props) {
       role: user.role,
       avatar: user.avatar,
     });
-  }, [user]),
+  }, [user]);
     // Efect foor change avatar
     useEffect(() => {
       if (user.avatar) {
