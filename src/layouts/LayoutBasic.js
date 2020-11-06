@@ -1,21 +1,39 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import { Route, Switch } from "react-router-dom";
-import { Layout } from "antd";
+import { Layout, Row, Col } from "antd";
 import "./LayoutBasic.scss";
+import MenuTop from "../components/Web/MenuTop";
+import MenuSide from "../components/Web/MenuSide";
 export default function LayoutAdmin(props) {
-  const { Header, Content, Footer } = Layout;
+  const { Header, Footer } = Layout;
+  const [isMobileMenu, setIsMobileMenu] = useState(false);
   const { routes } = props;
+
+  const renderComponent = () => { 
+    console.log(window.innerWidth);
+    if (window.innerWidth > 768) {
+      return (<MenuTop />)
+    }
+    else { 
+      return (<MenuSide/>)
+    }
+  }
+
+
   return (
-    <Layout>
-      <h2>Menu side basic user</h2>
-      <Layout>
-        <Header>Header Basic</Header>
-        <Content>
-          <LoadRoutes routes={routes} />
-        </Content>
-        <Footer>Daniel Tendero García</Footer>
-      </Layout>
-    </Layout>
+    <Row>
+      <Col md={4} />
+      <Col md={16} >
+         
+          {renderComponent()}
+         <LoadRoutes routes={routes} />
+         <Footer>Daniel Tendero García</Footer>
+      </Col>
+      <Col md={4} />
+
+
+    </Row>
+ 
   );
 }
 function LoadRoutes({ routes }) {
