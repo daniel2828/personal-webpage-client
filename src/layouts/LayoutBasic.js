@@ -4,35 +4,60 @@ import { Layout, Row, Col } from "antd";
 import "./LayoutBasic.scss";
 import MenuTop from "../components/Web/MenuTop";
 import MenuSide from "../components/Web/MenuSide";
-export default function LayoutAdmin(props) {
-  const { Header, Footer } = Layout;
+import MenuCollapse from "../components/Web/MenuCollapse"
+export default function LayoutBasic(props) {
+  const { Header, Footer , Content} = Layout;
   const [isMobileMenu, setIsMobileMenu] = useState(false);
   const { routes } = props;
-
+  const [menuCollapsed, setMenuCollapsed] = useState(false);
   const renderComponent = () => { 
     console.log(window.innerWidth);
     if (window.innerWidth > 768) {
-      return (<MenuTop />)
+      return (
+        <>
+        <Row>
+            <Col md={4} />
+            <Col md={16} >
+         
+              <MenuTop />
+         
+            </Col>
+            <Col md={4} />
+          </Row>
+          <LoadRoutes routes={routes} />
+          <Footer>Daniel Tendero García</Footer>
+          </>
+      )
     }
     else { 
-      return (<MenuSide/>)
+      return (<>
+        <Layout>
+           <MenuSide menuCollapsed={menuCollapsed} />
+        
+        <Layout
+          className="layout-basic"
+          style={{ marginLeft: menuCollapsed ? "80px" : "200px" }}
+        >
+        <Header className="layout-basic__header">
+            <MenuCollapse menuCollapsed={menuCollapsed} setMenuCollapsed={ setMenuCollapsed} />
+            </Header>
+            <Content className="layout-basic__content">
+            <LoadRoutes routes={routes} />
+        
+            </Content>
+          <Footer className="layout-basic__footer">Daniel Tendero García</Footer>
+        </Layout>
+        </Layout>
+     </>)
     }
   }
 
 
   return (
-    <Row>
-      <Col md={4} />
-      <Col md={16} >
-         
+      <>
           {renderComponent()}
-         <LoadRoutes routes={routes} />
-         <Footer>Daniel Tendero García</Footer>
-      </Col>
-      <Col md={4} />
-
-
-    </Row>
+         </>
+      
  
   );
 }
