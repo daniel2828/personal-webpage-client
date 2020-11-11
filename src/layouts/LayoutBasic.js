@@ -4,9 +4,10 @@ import { Layout, Row, Col } from "antd";
 import "./LayoutBasic.scss";
 import MenuTop from "../components/Web/MenuTop";
 import MenuSide from "../components/Web/MenuSide";
-import MenuCollapse from "../components/Web/MenuCollapse"
+import MenuCollapse from "../components/Web/MenuCollapse";
+import Footer from "../components/Web/Footer"
 export default function LayoutBasic(props) {
-  const { Header, Footer , Content} = Layout;
+  const { Header, Content} = Layout;
   const [isMobileMenu, setIsMobileMenu] = useState(false);
   const { routes } = props;
   const [menuCollapsed, setMenuCollapsed] = useState(false);
@@ -25,7 +26,7 @@ export default function LayoutBasic(props) {
             <Col md={4} />
           </Row>
           <LoadRoutes routes={routes} />
-          <Footer>Daniel Tendero García</Footer>
+          <Footer/>
           </>
       )
     }
@@ -45,7 +46,7 @@ export default function LayoutBasic(props) {
             <LoadRoutes routes={routes} />
         
             </Content>
-          <Footer className="layout-basic__footer">Daniel Tendero García</Footer>
+          <Footer className="layout-basic__footer"></Footer>
         </Layout>
         </Layout>
      </>)

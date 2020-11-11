@@ -1,91 +1,89 @@
 import React, { useState, useEffect} from 'react'
-
 import { Switch, List, Button, Modal as ModalAntd, notification } from "antd";
-
+    
 import Modal from "../../../Modal";
 import DragSortableList from "react-drag-sortable";
-import { updateMenuApi, activateMenuApi , deleteMenuApi} from "../../../../api/menu";
-import { getAccessTokenApi} from "../../../../api/auth";
-import "./MenuWebList.scss";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import AddMenuWebForm from "../AddMenuWebForm";
-import EditMenuWebForm from "../EditMenuWebForm";
-
+import { updateNavigationApi, activateNavigationApi, deleteNavigationApi} from "../../../../api/navigation";
+import { getAccessTokenApi } from "../../../../api/auth";
+import "./NavigationWebList.scss";
+import { DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import AddNavigationWebForm from "../AddNavigationWebForm";
+import EditNavigationWebForm from "../EditNavigationWebForm";
 
 const { confirm } = ModalAntd;
-
-export default function MenuWebList(props) {
-    const { menu, setReloadMenuWeb } = props;
+export default function NavigationWebList(props) {
+    const { navigation, setReloadNavigation } = props;
     const [listItems, setListItems] = useState([]);
     const [isVisibleModal, setIsVisibleModal] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modalContent, setModalContent] = useState(null);
 
-    const activateMenu = (menu, status) => { 
+    const activateNavigation = (deleteNavigationApi, status) => { 
         const accessToken = getAccessTokenApi();
-        activateMenuApi(accessToken, menu._id, status).then(response => {
-            notification["success"]({
-                message:response
+        activateNavigationApi(accessToken, deleteNavigationApi._id, status).
+            then(response => { 
+                notification["success"]({
+                    message:response
+                })
             })
-        })
     }
     const onSort = (sortedList) => { 
         const accessToken = getAccessTokenApi();
         sortedList.forEach(item => {
             const { _id } = item.content.props.item;
             const order = item.rank;
-            updateMenuApi(accessToken, _id, { order });     
-        })
+            updateNavigationApi(accessToken, _id, { order });
+        });
     }
-    useEffect(() => { 
+ useEffect(() => { 
 
         const listItemsArray = [];
-        menu.forEach(item => {
+        navigation.forEach(item => {
             listItemsArray.push({
-                content: <MenuItem item={item} activateMenu={activateMenu} editMenuWebModal={editMenuWebModal} deleteMenu={deleteMenu}></MenuItem>
+                content: <NavigationItem item={item} activateNavigation={activateNavigation} editNavigationWebModal={editNavigationWebModal} deleteNavigation={deleteNavigation}></NavigationItem>
             })
         });
         setListItems(listItemsArray);
-    }, [menu])
+    }, [navigation])
 
-    const addMenuWebModal = () => { 
+    const addNavigationWebModal = () => { 
         setIsVisibleModal(true);
-        setModalTitle("Creando nuevo menú");
+        setModalTitle("Creando nuevo navigation");
         setModalContent(
-            <AddMenuWebForm
+            <AddNavigationWebForm
                 setIsVisibleModal={setIsVisibleModal}
-                setReloadMenuWeb={setReloadMenuWeb}
-            ></AddMenuWebForm>
+                setReloadNavigation={setReloadNavigation}
+            ></AddNavigationWebForm>
         )
 
     }
 
-    const editMenuWebModal = (menu) => { 
+    const editNavigationWebModal = (navigation) => { 
         setIsVisibleModal(true);
-        setModalTitle(`Editando menu. ${menu.title}`);
+        setModalTitle(`Editando navigation. ${navigation.title}`);
         setModalContent(
-            <EditMenuWebForm
+            <EditNavigationWebForm
                 setIsVisibleModal={setIsVisibleModal}
-                setReloadMenuWeb={setReloadMenuWeb}
-                menu={menu}
+                setReloadNavigation={setReloadNavigation}
+                navigation={navigation}
             />
         )
     }
-    const deleteMenu = (menu) => { 
+    const deleteNavigation = (navigation) => { 
         const accessToken = getAccessTokenApi();
-        const id = menu._id;
+        const id = navigation._id;
 
          confirm({
             title: "Eliminando menú",
-            content: `¿Estas seguro de que quieres eliminar el menú: ${menu.title}`,
+            content: `¿Estas seguro de que quieres eliminar el navigation: ${navigation.title}`,
             okText: "Eliminar",
             okType: "danger",
             cancelText: "Cancelar",
             onOk() {
-                 deleteMenuApi(accessToken, id)
+                 deleteNavigationApi(accessToken, id)
                 .then((response) => {
                     notification["success"]({ message: response });
-                    setReloadMenuWeb(true);
+                    setReloadNavigation(true);
                 })
                 .catch((err) => {
                     notification["error"]({ message: err });
@@ -99,11 +97,11 @@ export default function MenuWebList(props) {
     }
 
     return (
-        <div className="menu-web-list">
-            <div className="menu-web-list__header">
-                <Button type="primary" onClick={addMenuWebModal}>Crear menú</Button>
+        <div className="deleteNavigationApi-web-list">
+            <div className="deleteNavigationApi-web-list__header">
+                <Button type="primary" onClick={addNavigationWebModal}>Crear menú</Button>
             </div>
-            <div className="menu-web-list__items">
+            <div className="deleteNavigationApi-web-list__items">
                 <DragSortableList items={listItems} onSort={onSort} type="vertical"></DragSortableList>
             </div>
             <Modal
@@ -117,19 +115,18 @@ export default function MenuWebList(props) {
         </div>
     )
 }
-
-function MenuItem(props) { 
-    const { item, activateMenu , editMenuWebModal, deleteMenu} = props;
+function NavigationItem(props) { 
+    const { item, activateNavigation , editNavigationWebModal, deleteNavigation} = props;
     return (
         <List.Item
             actions={[
                 <Switch defaultChecked={item.active} onChange={e => { 
-                    activateMenu(item, e);
+                    activateNavigation(item, e);
                 }}/>,
-                <Button type="primary" onClick={()=>editMenuWebModal(item)}>
+                <Button type="primary" onClick={()=>editNavigationWebModal(item)}>
                    <EditOutlined></EditOutlined>
                 </Button>,
-                <Button type="danger" onClick={() => deleteMenu(item)}>
+                <Button type="danger" onClick={() => deleteNavigation(item)}>
                    <DeleteOutlined></DeleteOutlined>
                 </Button>
             ]}

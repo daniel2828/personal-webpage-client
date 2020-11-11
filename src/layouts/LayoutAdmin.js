@@ -5,7 +5,6 @@ import MenuTop from "../components/Admin/MenuTop";
 import MenuSider from "../components/Admin/MenuSider";
 import "./LayoutAdmin.scss";
 import Signin from "../pages/Admin/Signin";
-import { getAccessToken, getRefreshToken } from "../api/auth";
 import useAuth from "../hooks/useAuth";
 export default function LayoutAdmin(props) {
   const { Header, Content, Footer } = Layout;
@@ -13,10 +12,7 @@ export default function LayoutAdmin(props) {
   const [menuCollapsed, setMenuCollapsed] = useState(false);
   const { user, isLoading } = useAuth();
 
-  /*
-  const accessToken = getAccessToken();
-  const refreshToken = getRefreshToken();
-  */
+ 
   if (!user && !isLoading) {
     // That means that there is no user in the system
     return (
