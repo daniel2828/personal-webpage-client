@@ -3,6 +3,7 @@ import "./Footer.scss";
 import { Layout, Row, Col } from "antd";
 import MyInfo from "./MyInfo";
 import NavigationFooter from "./NavigationFooter";
+import Newsletter from "../../../components/Web/Newsletter";
 export default function Footer() {
     const { Footer } = Layout;
     return (
@@ -13,7 +14,7 @@ export default function Footer() {
                     <Row>
                         <Col md={8}><MyInfo/></Col>
                         <Col md={8}> <NavigationFooter/></Col>
-                        <Col md={ 8}>Newsletter</Col>
+                        <Col md={ 8}><Newsletter/></Col>
                     </Row>
                     <Row className="footer__copyright">
                         <Col md={12}>

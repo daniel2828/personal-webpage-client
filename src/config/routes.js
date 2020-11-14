@@ -8,6 +8,7 @@ import AdminHome from "../pages/Admin/Admin";
 import AdminUsers from "../pages/Admin/Users/Users";
 import AdminMenuWeb from "../pages/Admin/MenuWeb";
 import AdminNavigationWeb from "../pages/Admin/MenuNavigation";
+import AdminCourses from "../pages/Admin/Courses";
 //Normal pages
 
 import Home from "../pages/Home";
@@ -49,6 +50,11 @@ const routes = [
         path: "/admin/navigation",
         component: AdminNavigationWeb,
         exact : true
+      },
+      {
+        path: "/admin/courses",
+        component: AdminCourses,
+        exact: true
       },
       {
         component: Error404,
