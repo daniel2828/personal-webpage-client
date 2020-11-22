@@ -66,6 +66,7 @@ export function logout() {
 
 function willExpireToken(token) {
   // Expire token function
+  // Check token 
   const seconds = 60;
   const metaToken = jwtDecode(token);
   const { exp } = metaToken;
