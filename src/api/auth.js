@@ -39,7 +39,7 @@ export function refreshAccessTokenApi(refreshToken) {
       "Content-Type": "application/json",
     },
   };
-
+ //Fetch url
   fetch(url, params)
     .then((response) => {
       if (response.status !== 200) {
@@ -73,3 +73,5 @@ function willExpireToken(token) {
   const now = (Date.now() + seconds) / 1000;
   return now > exp;
 }
+
+
