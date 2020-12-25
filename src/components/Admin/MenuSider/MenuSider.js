@@ -7,6 +7,7 @@ import { HomeOutlined, MenuOutlined , UserOutlined, UpOutlined, BookOutlined} fr
 import "./MenuSider.scss";
 
 function MenuSider(props) {
+  // Get props
   const { menuCollapsed, location } = props;
   const { Sider } = Layout;
   var route = "";
