@@ -8,6 +8,7 @@ import "./MenuSider.scss";
 
 function MenuSider(props) {
   // Get props
+  // Menu and location
   const { menuCollapsed, location } = props;
   const { Sider } = Layout;
   var route = "";
