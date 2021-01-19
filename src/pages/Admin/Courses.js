@@ -6,6 +6,7 @@ export default function Courses() {
     const [reloadCourses, setReloadCourses] = useState(false);
     useEffect(() => { 
         getCoursesApi().then(response => { 
+          
             setCourses(response.courses);
         })
         setReloadCourses(false);
