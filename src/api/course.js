@@ -30,3 +30,22 @@ export function getCourseDataUdemyApi(id) {
             return err;
         })
 }
+export function deleteCourseApi(token, id) { 
+    const url = `${BASE_PATH}/${apiVersion}/delete-course/${id}`;
+    const params = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: token
+        }
+    }
+    return fetch(url, params).then(response => { 
+        return response.json();
+    }).then(result => { 
+        return result;
+    }
+    ).catch(err => {
+        console.log(err)
+        return err;
+    })
+}

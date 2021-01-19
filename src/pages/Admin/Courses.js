@@ -13,7 +13,7 @@ export default function Courses() {
     }, [reloadCourses]) 
     return (
         <div className="courses">
-            <CoursesList courses={courses} setCourses={ setCourses}/>
+            <CoursesList courses={courses} setReloadCourses={ setReloadCourses}/>
             
         </div>
     )
