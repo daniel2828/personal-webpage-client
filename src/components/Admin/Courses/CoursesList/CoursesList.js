@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react'
 import { getCourseDataUdemyApi, deleteCourseApi } from "../../../../api/course";
 import { List, Button, Modal as ModalAntd, notification } from "antd";
 import DragSortableList from "react-drag-sortable";
+import AddEditCourseForm from "../AddEditCoursesForm";
 import Modal from "../../../Modal";
 import { EditOutlined, DeleteOutlined}from "@ant-design/icons";
 import "./CoursesList.scss";
@@ -30,6 +31,16 @@ export default function CoursesList(props) {
     const onSort = (sortedList, dropEvent) => { 
         console.log(sortedList);
     } 
+    
+    const addCourseModal = () => { 
+        console.log("Hola")
+        setIsVisibleModal(true);
+        setModalTitle("Creando nuevo curso");
+        setModalContent(<AddEditCourseForm
+            setIsVisibleModal={setIsVisibleModal}
+            setReloadCourses={setReloadCourses}
+        />)
+    }
 
     const deleteCourse = course => {
         const accessToken = getAccessTokenApi();
@@ -61,7 +72,7 @@ export default function CoursesList(props) {
     return (
         <div className="courses-list">
             <div className="courses-list__header">
-                <Button type="primary" onClick={ () => console.log("Creando curso..")}>Nuevo Curso</Button>
+                <Button type="primary" onClick={  addCourseModal}>Nuevo Curso</Button>
             </div>
             <div className="courses-list__items">
                 {listCourses.length === 0 && (
@@ -69,6 +80,13 @@ export default function CoursesList(props) {
                 )}
                 <DragSortableList items={listCourses} onSort={ onSort} type="vertical"></DragSortableList>
             </div>
+            <Modal
+                title={modalTitle}
+                isVisible={isVisibleModal}
+                setIsVisible={ setIsVisibleModal}
+            >
+                { modalContent}
+            </Modal>
         </div>
         
     )
@@ -79,6 +97,7 @@ function Course(props) {
     const { course ,deleteCourse} = props;
     const [courseData, setCourseData] = useState(null);
     useEffect(() => {
+        console.log(course.idCourse)
         getCourseDataUdemyApi(course.idCourse).then(response => {
          
             if (response.code !== 200) {

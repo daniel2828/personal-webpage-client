@@ -49,3 +49,24 @@ export function deleteCourseApi(token, id) {
         return err;
     })
 }
+export function addCourseApi(token, course) { 
+    const url = `${BASE_PATH}/${apiVersion}/add-course`;
+    const params = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: token
+        },
+        body: JSON.stringify(course)
+    };
+    return fetch(url, params)
+        .then(response => { 
+            return response.json();
+        })
+        .then(result => { 
+            return result;
+        })
+        .catch(err => { 
+            return err;
+        })
+}
