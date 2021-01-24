@@ -3,11 +3,17 @@ import { Form, Icon, Input, Button, notification } from "antd";
 import { getAccessTokenApi } from "../../../../api/auth";
 import "./AddEditCoursesForm.scss";
 import { KeyOutlined, GifOutlined, DollarOutlined, LinkOutlined} from "@ant-design/icons";
-import { addCourseApi } from "../../../../api/course";
+import { addCourseApi, updateCourseApi } from "../../../../api/course";
 
 export default function AddEditCoursesForm(props) {
     const { setIsVisibleModal, setReloadCourses, course } = props;
     const [courseData, setCourseData] = useState({});
+
+    useEffect(() => {
+        if (course)
+             setCourseData(course);
+       
+    }, [course])
     const addCourse = e => { 
         if (!courseData.idCourse) {
             notification["error"]({
@@ -37,7 +43,20 @@ export default function AddEditCoursesForm(props) {
         
     }
     const editCourse = e => { 
-        console.log("Actualizando curso");
+        const accessToken = getAccessTokenApi();
+        updateCourseApi(accessToken, course._id, courseData).then(response => { 
+            const typeNotification = response.code === 200 ? "success" : "warning";
+            notification[typeNotification]({
+                message: response.message
+            });
+            setIsVisibleModal(false);
+            setReloadCourses(true);
+            setCourseData({})
+        }).catch(() => { 
+            notification["error"]({
+                message : "Error del servidor, intentelo más tarde"
+            })
+        })
     }
     return (
         <div className="add-edit-course-form">

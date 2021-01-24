@@ -1,18 +1,20 @@
-import React, { useState, useEffect}from 'react'
+import React, { useState, useEffect } from 'react'
+import { Row, Col, Spin, notification } from "antd";
+
 import { getCoursesApi } from "../api/course";
+import PresentationCourses from "../components/Web/Courses/PresentationCourses";
+import CourseList from "../components/Web/Courses/CoursesList";
 export default function Courses() {
-    const [courses, setCourses] = useState([]);
-    const [reloadCourses, setReloadCourses] = useState(false);
-    useEffect(() => {
-        console.log("holaawdawd")
-        getCoursesApi().then(response => { 
-            console.log(response)
-        })
-        setReloadCourses(false);
-    }, [])
-    return (
-        <div className="courses">
-            <h1>Courses</h1>
-        </div>
+   
+    return (<Row>
+        <Col md={4}>
+            
+        </Col>
+        <Col md={16}>
+            <PresentationCourses></PresentationCourses>
+            <CourseList></CourseList>
+        </Col>
+        <Col md={ 4}></Col>
+    </Row>
     )
 }

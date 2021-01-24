@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react'
-import { getCourseDataUdemyApi, deleteCourseApi } from "../../../../api/course";
+import { getCourseDataUdemyApi, deleteCourseApi, updateCourseApi } from "../../../../api/course";
 import { List, Button, Modal as ModalAntd, notification } from "antd";
 import DragSortableList from "react-drag-sortable";
 import AddEditCourseForm from "../AddEditCoursesForm";
@@ -22,14 +22,19 @@ export default function CoursesList(props) {
         courses.forEach(course => { 
             
             listCourseArray.push({
-                content: (<Course course={course} deleteCourse={ deleteCourse}></Course>)
+                content: (<Course course={course} deleteCourse={deleteCourse} editCourseModal={ editCourseModal}></Course>)
             });
         })
         setListCourses(listCourseArray);
     }, [courses])
 
     const onSort = (sortedList, dropEvent) => { 
-        console.log(sortedList);
+        const accessToken = getAccessTokenApi();
+        sortedList.forEach(item => { 
+            const { _id } = item.content.props.course;
+            const order = item.rank
+            updateCourseApi(accessToken, _id, {order})
+        })
     } 
     
     const addCourseModal = () => { 
@@ -41,7 +46,16 @@ export default function CoursesList(props) {
             setReloadCourses={setReloadCourses}
         />)
     }
-
+  
+    const editCourseModal = (course) => { 
+        setIsVisibleModal(true);
+        setModalTitle("Actualizando curso");
+        setModalContent(<AddEditCourseForm
+            setIsVisibleModal={setIsVisibleModal}
+            setReloadCourses={setReloadCourses}
+            course={ course}
+        />)
+    }
     const deleteCourse = course => {
         const accessToken = getAccessTokenApi();
         confirm({
@@ -94,7 +108,7 @@ export default function CoursesList(props) {
 
 
 function Course(props) { 
-    const { course ,deleteCourse} = props;
+    const { course ,deleteCourse, editCourseModal} = props;
     const [courseData, setCourseData] = useState(null);
     useEffect(() => {
         console.log(course.idCourse)
@@ -113,7 +127,7 @@ function Course(props) {
     return (
         <List.Item
             actions={[
-                <Button type="primary" onClick={() => console.log("Editar curso")}>
+                <Button type="primary" onClick={() => editCourseModal(course)}>
                    <EditOutlined></EditOutlined>
                 </Button>,
                 <Button type="danger" onClick={() => deleteCourse(course)}>
