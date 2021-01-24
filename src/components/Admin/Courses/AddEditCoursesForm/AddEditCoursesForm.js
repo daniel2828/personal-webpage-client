@@ -10,8 +10,7 @@ export default function AddEditCoursesForm(props) {
     const [courseData, setCourseData] = useState({});
 
     useEffect(() => {
-        if (course)
-             setCourseData(course);
+        course ? setCourseData(course) : setCourseData({});
        
     }, [course])
     const addCourse = e => { 
