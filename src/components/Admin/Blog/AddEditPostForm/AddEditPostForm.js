@@ -32,7 +32,7 @@ export default function AddEditPostForm(props) {
   const processPost = e => {
    
     const { title, url, description, date } = postData;
-
+    console.log(title)
     if (!title || !url || !description || !date) {
       notification["error"]({
         message: "Todos los campos son obligatorios."

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Row, Col, Spin, notification } from "antd";
-
+import { Helmet } from "react-helmet";
 import { getCoursesApi } from "../api/course";
 import PresentationCourses from "../components/Web/Courses/PresentationCourses";
 import CourseList from "../components/Web/Courses/CoursesList";
@@ -19,7 +19,11 @@ export default function Courses() {
         })
      
     }, [])
-    return (<Row>
+    return (<>
+        <Row>
+            <Helmet>
+                <title>Cursos | Daniel Tendero García</title>
+            </Helmet>
         <Col md={4}>
             
         </Col>
@@ -33,6 +37,7 @@ export default function Courses() {
            
         </Col>
         <Col md={ 4}></Col>
-    </Row>
+        </Row>
+        </>
     )
 }
