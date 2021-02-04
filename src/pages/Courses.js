@@ -32,7 +32,7 @@ export default function Courses() {
             {!courses ? (
                 <Spin tip="Cargando cursos" style={{textAlign:"center", width:"100%", padding: "20px"}}></Spin>
             ) : (
-                    <CourseList courses={ courses}></CourseList>
+                        <CourseList courses={courses}></CourseList>
             )}
            
         </Col>

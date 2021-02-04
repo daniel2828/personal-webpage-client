@@ -9,7 +9,7 @@ export default function Home() {
     <>
       <Helmet>
         <title>Home</title>
-        <meta name="description" content="Home | Web sobre programación" data-react-helmet ="true" / >
+        <meta name="description" content="Home | Daniel Tendero García" data-react-helmet ="true" / >
       </Helmet>
       <MainBanner/>
       
