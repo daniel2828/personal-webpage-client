@@ -3,7 +3,7 @@ import React from "react";
 export default function Contact() {
   return (
     <div>
-      <h1>Estamos en contact</h1>
+      <h1>Formulario de contacto Daniel Tendero</h1>
     </div>
   );
 }
