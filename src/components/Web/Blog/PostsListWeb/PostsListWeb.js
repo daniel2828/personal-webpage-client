@@ -61,7 +61,7 @@ function Post(props) {
   const { post } = props;
   const day = moment(post.date).format("DD");
   const month = moment(post.date).format("MMMM");
-  // Create post
+  // 
   return (
     <List.Item className="post">
       <Row gutter={ 24}>
