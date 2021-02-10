@@ -5,7 +5,7 @@ export default function Contact() {
     <div>
       <h1>Formulario de contacto Daniel Tendero</h1>
       <h2>Contacta conmigo</h2>
-      
+      <p>Correo:</p>
     </div>
   );
 }
