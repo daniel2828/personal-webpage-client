@@ -7,6 +7,7 @@ export default function Contact() {
       <h2>Contacta conmigo</h2>
       <p>Correo:</p>
       <p>Teléfono:</p>
+       <p>Dirección:</p>
     </div>
   );
 }
