@@ -8,6 +8,7 @@ export default function Contact() {
       <p>Correo:</p>
       <p>Teléfono:</p>
        <p>Dirección:</p>
+       <p>Portal </p>
     </div>
   );
 }
