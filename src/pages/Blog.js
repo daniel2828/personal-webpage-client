@@ -8,7 +8,7 @@ import PostInfo from "../components/Web/Blog/PostInfo";
 export default function Blog(props) {
   const { location, history } = props;
   const { url } = useParams();
-  //Blog
+
   return (
     <Row>
       <Col md={4} />
