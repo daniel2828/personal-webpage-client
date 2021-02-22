@@ -3,7 +3,7 @@ import { Modal as ModalAntd } from "antd";
 export default function Modal(props) {
   const { children, title, isVisible, setIsVisible, ...other } = props;
    // MODAL design
-  // V
+  // Vaa
   return (
     <ModalAntd
       title={title}
