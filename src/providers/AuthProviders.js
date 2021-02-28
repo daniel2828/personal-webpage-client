@@ -10,6 +10,7 @@ import jwtDecode from "jwt-decode";
 export const AuthContext = createContext();
 
 export default function AuthProvider(props) {
+  // AUTh
   const { children } = props;
   const [user, setUser] = useState({
     user: null,
