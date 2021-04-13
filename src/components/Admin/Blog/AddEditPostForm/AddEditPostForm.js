@@ -20,7 +20,7 @@ import "./AddEditPostForm.scss";
 export default function AddEditPostForm(props) {
   const { setIsVisibleModal, setReloadPosts, post } = props;
   const [postData, setPostData] = useState({});
-
+  const change;
   useEffect(() => {
     if (post) {
       setPostData(post);

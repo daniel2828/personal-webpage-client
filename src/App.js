@@ -18,7 +18,7 @@ function App() {
     </AuthProvider>
   );
 }
-// Para enrutar las rutas
+// 
 // Lo que no entiendo muy bien es la mierda del render
 // Renderiza lo que haya en el routes.js
 function RouteWithSubroutes(route) {
