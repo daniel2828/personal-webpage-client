@@ -41,6 +41,7 @@ export function refreshAccessTokenApi(refreshToken) {
     },
   };
  //Fetch url
+ // Check dock
   fetch(url, params)
     .then((response) => {
       if (response.status !== 200) {
