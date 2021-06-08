@@ -32,7 +32,7 @@ export function refreshAccessTokenApi(refreshToken) {
   const bodyObj = {
     refreshToken: refreshToken,
   };
-  // Params over POST
+  // Params over
   const params = {
     method: "POST",
     body: JSON.stringify(bodyObj),
