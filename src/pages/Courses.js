@@ -6,7 +6,7 @@ import PresentationCourses from "../components/Web/Courses/PresentationCourses";
 import CourseList from "../components/Web/Courses/CoursesList";
 export default function Courses() {
     const [courses, setCourses] = useState(null);
-    
+        // Courses
     useEffect(() => {
         getCoursesApi().then(response => {
             if (response?.code !==200) { 
