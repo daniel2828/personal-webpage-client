@@ -4,8 +4,7 @@ export default function Modal(props) {
   const { children, title, isVisible, setIsVisible, ...other } = props;
    // MODAL design
   // test
-  // MOdal
-
+  
   return (
     <ModalAntd
       title={title}
@@ -14,6 +13,7 @@ export default function Modal(props) {
       onCancel={() => setIsVisible(false)}
       {...other}
     >
+      
       {children}
     </ModalAntd>
   );
