@@ -1,7 +1,6 @@
 import { BASE_PATH, apiVersion } from "./config";
 
 export function signUpApi(data) {
-  // Call to API to sing-up a user
   const url = `${BASE_PATH}/${apiVersion}/sign-up`;
 
   const params = {
