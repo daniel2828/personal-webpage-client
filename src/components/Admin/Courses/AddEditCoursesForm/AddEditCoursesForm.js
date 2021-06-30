@@ -4,7 +4,7 @@ import { getAccessTokenApi } from "../../../../api/auth";
 import "./AddEditCoursesForm.scss";
 import { KeyOutlined, GifOutlined, DollarOutlined, LinkOutlined} from "@ant-design/icons";
 import { addCourseApi, updateCourseApi } from "../../../../api/course";
-
+// Test
 export default function AddEditCoursesForm(props) {
     const { setIsVisibleModal, setReloadCourses, course } = props;
     const [courseData, setCourseData] = useState({});
